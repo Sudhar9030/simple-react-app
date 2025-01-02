@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 150" role="img" aria-label="Webtroit Logo">
+  <defs>
+    <style>
+      .text {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 72px;
+        font-weight: bold;
+        fill: url(#gradient);
+      }
+      .shadow {
+        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.6));
+      }
+    </style>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00d1ff" />
+      <stop offset="100%" stop-color="#ff00d4" />
+    </linearGradient>
+  </defs>
+  <rect width="450" height="150" rx="20" ry="20" fill="#1e1e2f" />
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" class="text shadow">
+    Webtroit
+  </text>
+</svg>

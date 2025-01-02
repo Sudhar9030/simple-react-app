@@ -18,7 +18,9 @@ export default function NavBar({
           margin: "10px 5px 10px 5px",
         }}
       >
-        <h3>Webtroit</h3>
+        <div style={{width: '100px', height: '40px'}}>
+          <img src="webtroit.svg" alt="webtroit" />
+        </div>
         <div>
           <Button>
           <Link href="/dashboard">Dashboard</Link>
