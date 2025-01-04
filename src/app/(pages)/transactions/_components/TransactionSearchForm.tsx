@@ -1,24 +1,31 @@
 'use client'
-import { Box, Button, Input, Paper, TextField } from "@mui/material";
-import { useForm, SubmitHandler, Controller, useWatch } from 'react-hook-form';
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod'
-import { useEffect } from "react";
-import { error } from "console";
 
-type UploadFormInput = {
+import useTransactionsStore from "@/lib/stores/TransactionStore"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Box, TextField, Button } from "@mui/material"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
+import { DatePicker } from "@mui/x-date-pickers/DatePicker"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { useEffect } from "react"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { z } from "zod"
+
+//define search form type
+export type TransactionSearchFormInput = {
     account: string | null,
     startDate: Date | null,
     endDate: Date | null
 }
 
-export default function uploads() {
+export default function TransactionSearchForm() {
 
+    
 
-    const uploadFormSchema = z.object({
+    const {searchCriteria, setSearchCriteria, pageCriteria} = useTransactionsStore()
+    
+
+    // define search form schema validations
+    const transactionSearchFormSchema = z.object({
         account: z.string({
             required_error: 'Account is required'
         })
@@ -33,23 +40,26 @@ export default function uploads() {
         })
     })
 
+
+    //Create and register form
     const { register,
-        handleSubmit,
-        watch,
-        control,
-        setValue,
-        clearErrors,
-        setError,
-        trigger,
-        getFieldState,
-        formState: { errors, isValid, touchedFields } }
-        = useForm<UploadFormInput>({
-            resolver: zodResolver(uploadFormSchema),
-            mode: 'all',
-        })
+            handleSubmit,
+            watch,
+            control,
+            setValue,
+            clearErrors,
+            setError,
+            trigger,
+            getFieldState,
+            formState: { errors, isValid, touchedFields } }
+            = useForm<TransactionSearchFormInput>({
+                resolver: zodResolver(transactionSearchFormSchema),
+                mode: 'all',
+            })
 
+    //add wather to start date and update end date accordingly
     const watchStartDate = watch('startDate')
-
+    
     useEffect(() => {
         if (watchStartDate) {
             const endDate = new Date(watchStartDate.getFullYear(), watchStartDate.getMonth() + 1, 0);
@@ -59,10 +69,13 @@ export default function uploads() {
     }, [watchStartDate])
 
 
-    const onSubmit: SubmitHandler<UploadFormInput> = (data) => {
-        console.log(data)
-        console.log(errors)
+    //handle form submission
+    const onSubmit: SubmitHandler<TransactionSearchFormInput> = (data) => {
+       // console.log(data)
+        console.log(pageCriteria)
+        setSearchCriteria(data)
     }
+
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
